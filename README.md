@@ -21,7 +21,9 @@ Source: [Menstrual Health & Productivity Dataset](https://www.kaggle.com/dataset
    - Target: `pms_symptoms` (1,427 users with PMS vs 545 without, an imbalanced split)
    - Features: `pcos_diagnosed`, `stress_score_baseline`, `energy_level`, `concentration_score`, `sleep_hours`
    - Stratified 80/20 train-test split and 5-fold stratified cross-validation (macro F1)
-   - Oversampling of the training data only, using **ADASYN** and **SMOTE**
+   - Oversampling of the training data only, to balance the classes:
+     - [**ADASYN**](https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.ADASYN.html) (Adaptive Synthetic Sampling) creates more       synthetic samples for minority-class examples that are harder to learn.
+     - [**SMOTE**](https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html) (Synthetic Minority Over-sampling Technique) creates synthetic minority samples by interpolating between neighboring examples.
    - Models: **Logistic Regression** and **Random Forest** (200 trees)
 4. **Evaluation**: accuracy, precision, recall, F1, ROC-AUC, confusion matrices, a ROC curve and Random Forest feature importances
 
@@ -37,7 +39,7 @@ Source: [Menstrual Health & Productivity Dataset](https://www.kaggle.com/dataset
 Random Forest with SMOTE performed best, with a cross-validated macro F1 of 0.75 and a test F1 of 0.77 for the PMS class. However, ROC-AUC stayed between 0.53 and 0.57 for every model, and all models struggled to identify users without PMS. This suggests the selected features carry only a weak signal for PMS, and that richer inputs (hormone levels, pain, flow, lifestyle factors) could improve the models.
 
 ### Tech stack
-Python · pandas · NumPy · scikit-learn · imbalanced-learn · matplotlib · seaborn · Google Colab
+Python · pandas · NumPy · scikit-learn · [imbalanced-learn](https://imbalanced-learn.org/) (ADASYN, SMOTE) · matplotlib · seaborn · Google Colab
 
 ### How to run
 Open the notebook in Google Colab using the badge at the top. Then update the paths to `Period_Log.csv` and `User_Profile.csv`, which are also available in this repo.
